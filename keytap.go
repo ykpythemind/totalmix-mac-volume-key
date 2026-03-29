@@ -1,8 +1,7 @@
 package main
 
 /*
-#cgo CFLAGS: -x objective-c
-#cgo LDFLAGS: -framework CoreGraphics -framework Carbon
+#cgo LDFLAGS: -framework CoreGraphics -framework Cocoa -framework CoreAudio
 #include "keytap_darwin.h"
 */
 import "C"

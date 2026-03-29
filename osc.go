@@ -91,6 +91,33 @@ func (l *OSCListener) Listen() {
 }
 
 func (l *OSCListener) handleMessage(data []byte) {
+	// Check if this is an OSC bundle
+	if len(data) >= 8 && string(data[:8]) == "#bundle\x00" {
+		l.handleBundle(data)
+		return
+	}
+	l.handleSingleMessage(data)
+}
+
+func (l *OSCListener) handleBundle(data []byte) {
+	// OSC bundle format:
+	//   "#bundle\0" (8 bytes)
+	//   timetag (8 bytes)
+	//   then repeated: size (4 bytes big-endian) + element (size bytes)
+	pos := 16 // skip "#bundle\0" + timetag
+	for pos+4 <= len(data) {
+		size := int(binary.BigEndian.Uint32(data[pos : pos+4]))
+		pos += 4
+		if pos+size > len(data) || size <= 0 {
+			break
+		}
+		// Each element can be a message or nested bundle
+		l.handleMessage(data[pos : pos+size])
+		pos += size
+	}
+}
+
+func (l *OSCListener) handleSingleMessage(data []byte) {
 	address, value, ok := parseOSCFloat(data)
 	if !ok {
 		return

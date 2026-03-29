@@ -9,4 +9,8 @@
 // Start the event tap (blocks on CFRunLoop)
 void startEventTap(void);
 
+// Get the current master volume of the default output device via CoreAudio.
+// Returns the volume as a float (0.0-1.0), or -1.0 on error.
+float getDefaultOutputVolume(void);
+
 #endif

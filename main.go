@@ -6,12 +6,13 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 )
 
 func main() {
 	sendPort := flag.Int("send-port", 7001, "TotalMix FX OSC incoming port")
 	recvPort := flag.Int("recv-port", 9001, "TotalMix FX OSC outgoing port (listen)")
-	step := flag.Float64("step", 0.02, "Volume step per key press (0.0-1.0)")
+	step := flag.Float64("step", 0.01, "Volume step per key press (0.0-1.0)")
 	flag.Parse()
 
 	vol := NewVolumeState()
@@ -35,9 +36,25 @@ func main() {
 		go listener.Listen()
 	}
 
+	// Sync current volume from TotalMix FX.
+	// Sending an out-of-range value (-1.0) to /1/mastervolume causes TotalMix
+	// to reject the value but respond with the current actual state as an OSC bundle.
+	// This is the standard approach used by multiple TotalMix OSC projects.
+	time.Sleep(100 * time.Millisecond)
+	for i := 0; i < 3 && !vol.Initialized(); i++ {
+		client.SendFloat("/1/mastervolume", -1.0)
+		time.Sleep(500 * time.Millisecond)
+	}
+
+	if vol.Initialized() {
+		fmt.Printf("Synced with TotalMix FX (current volume: %.0f%%)\n", vol.Level()*100)
+	} else {
+		fmt.Println("Warning: Could not sync volume from TotalMix FX. Starting from 0%%.")
+		vol.SetLevel(0.0)
+	}
+
 	fmt.Printf("mac_audio_vol: Sending OSC to 127.0.0.1:%d, listening on :%d\n", *sendPort, *recvPort)
 	fmt.Println("Waiting for media key events... (Ctrl+C to quit)")
-	fmt.Println("Make sure Accessibility permission is granted and TotalMix FX OSC is enabled.")
 
 	// Handle key events in a goroutine
 	go func() {

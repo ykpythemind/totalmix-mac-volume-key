@@ -6,22 +6,34 @@ import (
 )
 
 const (
-	DefaultStep = 0.02 // 50 steps from 0 to 1
+	DefaultStep = 0.01 // 100 steps from 0 to 1
 )
 
 type VolumeState struct {
-	mu          sync.Mutex
-	level       float32
-	muted       bool
+	mu           sync.Mutex
+	level        float32
+	muted        bool
 	preMuteLevel float32
-	step        float32
+	step         float32
 }
 
 func NewVolumeState() *VolumeState {
 	return &VolumeState{
-		level: 0.5, // default 50%
+		level: -1, // uninitialized
 		step:  DefaultStep,
 	}
+}
+
+func (v *VolumeState) Initialized() bool {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	return v.level >= 0
+}
+
+func (v *VolumeState) Level() float32 {
+	v.mu.Lock()
+	defer v.mu.Unlock()
+	return v.level
 }
 
 func (v *VolumeState) SetLevel(level float32) {
@@ -36,6 +48,9 @@ func (v *VolumeState) SetLevel(level float32) {
 func (v *VolumeState) VolumeUp() float32 {
 	v.mu.Lock()
 	defer v.mu.Unlock()
+	if v.level < 0 {
+		v.level = 0 // safety: if somehow uninitialized
+	}
 	if v.muted {
 		v.muted = false
 		v.level = v.preMuteLevel
@@ -48,6 +63,9 @@ func (v *VolumeState) VolumeUp() float32 {
 func (v *VolumeState) VolumeDown() float32 {
 	v.mu.Lock()
 	defer v.mu.Unlock()
+	if v.level < 0 {
+		v.level = 0
+	}
 	if v.muted {
 		v.muted = false
 		v.level = v.preMuteLevel
@@ -57,10 +75,12 @@ func (v *VolumeState) VolumeDown() float32 {
 	return v.level
 }
 
-// ToggleMute toggles mute state. Returns the volume level to send (0.0 if muting, restored level if unmuting).
 func (v *VolumeState) ToggleMute() float32 {
 	v.mu.Lock()
 	defer v.mu.Unlock()
+	if v.level < 0 {
+		v.level = 0
+	}
 	if v.muted {
 		v.muted = false
 		v.level = v.preMuteLevel
