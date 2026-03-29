@@ -20,19 +20,13 @@ RME Firefaceなどのオーディオインターフェースを接続するとma
 4. Remote Controller の Outgoing Port: `9001`
 5. Remote Controller の Host: `127.0.0.1`
 
-### ビルド済みバイナリ
+### ビルド済みバイナリ（ワンライナー）
 
-[Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) からダウンロード。M1 macの場合はarm64。
-
+```bash
+curl -sL https://raw.githubusercontent.com/ykpythemind/totalmix-mac-volume-key/main/install.sh | bash
 ```
-# Apple Silicon (M1/M2/M3/M4)
-chmod +x totalmix-mac-volume-key-darwin-arm64
-sudo cp totalmix-mac-volume-key-darwin-arm64 /usr/local/bin/totalmix-mac-volume-key
 
-# Intel Mac
-chmod +x totalmix-mac-volume-key-darwin-amd64
-sudo cp totalmix-mac-volume-key-darwin-amd64 /usr/local/bin/totalmix-mac-volume-key
-```
+手動でダウンロードする場合は [Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) から取得してください。
 
 ### ソースからビルド
 
