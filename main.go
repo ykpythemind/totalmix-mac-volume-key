@@ -53,7 +53,7 @@ func main() {
 		vol.SetLevel(0.0)
 	}
 
-	fmt.Printf("mac_audio_vol: Sending OSC to 127.0.0.1:%d, listening on :%d\n", *sendPort, *recvPort)
+	fmt.Printf("totalmix-mac-volume-key: Sending OSC to 127.0.0.1:%d, listening on :%d\n", *sendPort, *recvPort)
 	fmt.Println("Waiting for media key events... (Ctrl+C to quit)")
 
 	// Handle key events in a goroutine

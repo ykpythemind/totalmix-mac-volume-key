@@ -1,3 +1,3 @@
-module mac_audio_vol
+module totalmix-mac-volume-key
 
 go 1.17
