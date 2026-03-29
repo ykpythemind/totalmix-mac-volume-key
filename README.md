@@ -13,13 +13,14 @@ RME Firefaceなどのオーディオインターフェースを接続するとma
 ## 前提条件
 
 - macOS
+- Go (ビルドに必要)
 - RME TotalMix FX がインストール済み
 - TotalMix FX の OSC 設定:
-  - Options > Settings > OSC タブ
-  - OSC Control を有効化
-  - Remote Controller の Incoming Port: `7001`
-  - Remote Controller の Outgoing Port: `9001`
-  - Remote Controller の Host: `127.0.0.1`
+  1. メニューバーの Options > Enable OSC Control にチェック
+  2. Options > Settings > OSC タブを開く
+  3. Remote Controller の Incoming Port: `7001`
+  4. Remote Controller の Outgoing Port: `9001`
+  5. Remote Controller の Host: `127.0.0.1`
 
 ## インストール
 
