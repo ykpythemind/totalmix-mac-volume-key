@@ -1,3 +1,3 @@
 module totalmix-mac-volume-key
 
-go 1.17
+go 1.26
