@@ -30,4 +30,4 @@ chmod +x "$TMPFILE"
 echo "Installing to ${INSTALL_DIR}/${BIN_NAME} (requires sudo)..."
 sudo mv "$TMPFILE" "${INSTALL_DIR}/${BIN_NAME}"
 
-echo "Done! Run '${BIN_NAME}' to start, or '${BIN_NAME} --install' to set up as a daemon."
+echo "Done! Run '${BIN_NAME} --install' to set up as a daemon."
