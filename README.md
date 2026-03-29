@@ -10,23 +10,19 @@ RME Firefaceなどのオーディオインターフェースを接続するとma
 - OSCプロトコル経由でTotalMix FXのマスターボリュームを制御
 - 出力デバイスがRME以外の場合はキーをスルー（通常のシステムボリュームが動作）
 
-## 前提条件
-
-- macOS
-- Go (ビルドに必要)
-- RME TotalMix FX がインストール済み
-- TotalMix FX の OSC 設定:
-  1. メニューバーの Options > Enable OSC Control にチェック
-  2. Options > Settings > OSC タブを開く
-  3. Remote Controller の Incoming Port: `7001`
-  4. Remote Controller の Outgoing Port: `9001`
-  5. Remote Controller の Host: `127.0.0.1`
-
 ## インストール
+
+### TotalMix FXのOSCの設定
+
+1. メニューバーの Options > Enable OSC Control にチェック
+2. Options > Settings > OSC タブを開く
+3. Remote Controller の Incoming Port: `7001`
+4. Remote Controller の Outgoing Port: `9001`
+5. Remote Controller の Host: `127.0.0.1`
 
 ### ビルド済みバイナリ
 
-[Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) からダウンロードして:
+[Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) からダウンロード。M1 macの場合はarm64。
 
 ```
 # Apple Silicon (M1/M2/M3/M4)
