@@ -24,6 +24,24 @@ RME Firefaceなどのオーディオインターフェースを接続するとma
 
 ## インストール
 
+### ビルド済みバイナリ
+
+[Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) からダウンロードして:
+
+```
+# Apple Silicon (M1/M2/M3/M4)
+chmod +x totalmix-mac-volume-key-darwin-arm64
+sudo cp totalmix-mac-volume-key-darwin-arm64 /usr/local/bin/totalmix-mac-volume-key
+
+# Intel Mac
+chmod +x totalmix-mac-volume-key-darwin-amd64
+sudo cp totalmix-mac-volume-key-darwin-amd64 /usr/local/bin/totalmix-mac-volume-key
+```
+
+### ソースからビルド
+
+Go が必要です。
+
 ```
 make install
 ```
