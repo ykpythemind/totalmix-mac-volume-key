@@ -28,15 +28,6 @@ curl -sL https://raw.githubusercontent.com/ykpythemind/totalmix-mac-volume-key/m
 
 手動でダウンロードする場合は [Releases](https://github.com/ykpythemind/totalmix-mac-volume-key/releases) から取得してください。
 
-### ソースからビルド
-
-Go が必要です。
-
-```
-go build -o totalmix-mac-volume-key .
-sudo cp totalmix-mac-volume-key /usr/local/bin/
-```
-
 ### デーモン化（ログイン時に自動起動）
 
 ```
