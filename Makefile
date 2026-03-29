@@ -9,14 +9,14 @@ build:
 	go build -o $(BINARY_NAME) .
 
 install: build
-	cp $(BINARY_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
+	sudo cp $(BINARY_NAME) $(INSTALL_DIR)/$(BINARY_NAME)
 	mkdir -p $(PLIST_DIR)
 	sed 's|__BINARY_PATH__|$(INSTALL_DIR)/$(BINARY_NAME)|g' $(PLIST_NAME) > $(PLIST_DIR)/$(PLIST_NAME)
 	launchctl load $(PLIST_DIR)/$(PLIST_NAME)
 	@echo "Installed and started. Check: launchctl list | grep totalmix"
 
 uninstall: stop
-	rm -f $(INSTALL_DIR)/$(BINARY_NAME)
+	sudo rm -f $(INSTALL_DIR)/$(BINARY_NAME)
 	rm -f $(PLIST_DIR)/$(PLIST_NAME)
 	@echo "Uninstalled."
 
