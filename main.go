@@ -10,10 +10,27 @@ import (
 )
 
 func main() {
+	install := flag.Bool("install", false, "Install as launchd daemon (auto-start on login)")
+	uninstall := flag.Bool("uninstall", false, "Uninstall launchd daemon")
 	sendPort := flag.Int("send-port", 7001, "TotalMix FX OSC incoming port")
 	recvPort := flag.Int("recv-port", 9001, "TotalMix FX OSC outgoing port (listen)")
 	step := flag.Float64("step", 0.01, "Volume step per key press (0.0-1.0)")
 	flag.Parse()
+
+	if *install {
+		if err := installDaemon(); err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+		return
+	}
+	if *uninstall {
+		if err := uninstallDaemon(); err != nil {
+			fmt.Fprintf(os.Stderr, "Error: %v\n", err)
+			os.Exit(1)
+		}
+		return
+	}
 
 	vol := NewVolumeState()
 	vol.step = float32(*step)

@@ -43,10 +43,17 @@ sudo cp totalmix-mac-volume-key-darwin-amd64 /usr/local/bin/totalmix-mac-volume-
 Go が必要です。
 
 ```
-make install
+go build -o totalmix-mac-volume-key .
+sudo cp totalmix-mac-volume-key /usr/local/bin/
 ```
 
-ビルドして `/usr/local/bin` にコピーし、launchd に登録してログイン時に自動起動します。
+### デーモン化（ログイン時に自動起動）
+
+```
+totalmix-mac-volume-key --install
+```
+
+launchd に登録され、ログイン時に自動起動・クラッシュ時に自動再起動します。
 
 初回実行時にmacOSのアクセシビリティ権限を求められます。
 System Settings > Privacy & Security > Accessibility で許可してください。
@@ -54,22 +61,13 @@ System Settings > Privacy & Security > Accessibility で許可してください
 ### アンインストール
 
 ```
-make uninstall
+totalmix-mac-volume-key --uninstall
 ```
 
 ### 手動で実行する場合
 
 ```
-make build
-./totalmix-mac-volume-key
-```
-
-### その他のコマンド
-
-```
-make stop      # デーモンを停止
-make start     # デーモンを起動
-make restart   # デーモンを再起動
+totalmix-mac-volume-key
 ```
 
 ### オプション
