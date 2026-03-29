@@ -10,16 +10,7 @@ permissions:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        include:
-          - os: macos-14
-            arch: arm64
-            goarch: arm64
-          - os: macos-13
-            arch: amd64
-            goarch: amd64
-    runs-on: ${{ matrix.os }}
+    runs-on: macos-15
     steps:
       - uses: actions/checkout@v4
 
@@ -27,17 +18,29 @@ jobs:
         with:
           go-version: '1.22'
 
-      - name: Build
+      - name: Build arm64
         env:
-          GOARCH: ${{ matrix.goarch }}
+          GOARCH: arm64
           CGO_ENABLED: 1
         run: |
-          go build -o totalmix-mac-volume-key-darwin-${{ matrix.arch }} .
+          go build -o totalmix-mac-volume-key-darwin-arm64 .
+
+      - name: Build amd64
+        env:
+          GOARCH: amd64
+          CGO_ENABLED: 1
+        run: |
+          go build -o totalmix-mac-volume-key-darwin-amd64 .
 
       - uses: actions/upload-artifact@v4
         with:
-          name: totalmix-mac-volume-key-darwin-${{ matrix.arch }}
-          path: totalmix-mac-volume-key-darwin-${{ matrix.arch }}
+          name: totalmix-mac-volume-key-darwin-arm64
+          path: totalmix-mac-volume-key-darwin-arm64
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: totalmix-mac-volume-key-darwin-amd64
+          path: totalmix-mac-volume-key-darwin-amd64
 
   release:
     needs: build
