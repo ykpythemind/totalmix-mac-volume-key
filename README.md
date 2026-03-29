@@ -34,10 +34,12 @@ curl -sL https://raw.githubusercontent.com/ykpythemind/totalmix-mac-volume-key/m
 totalmix-mac-volume-key --install
 ```
 
-launchd に登録され、ログイン時に自動起動・クラッシュ時に自動再起動します。
+launchd に登録され、ログイン時に自動起動します。
 
 初回実行時にmacOSのアクセシビリティ権限を求められます。
-System Settings > Privacy & Security > Accessibility で許可してください。
+System Settings > Privacy & Security > Accessibility で許可してください。 (うまく動かないときはこの権限を疑ってください)
+
+## その他
 
 ### アンインストール
 
