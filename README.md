@@ -21,20 +21,37 @@ RME Firefaceなどのオーディオインターフェースを接続するとma
   - Remote Controller の Outgoing Port: `9001`
   - Remote Controller の Host: `127.0.0.1`
 
-## ビルド
+## インストール
 
 ```
-go build -o totalmix-mac-volume-key .
+make install
 ```
 
-## 使い方
-
-```
-./totalmix-mac-volume-key
-```
+ビルドして `/usr/local/bin` にコピーし、launchd に登録してログイン時に自動起動します。
 
 初回実行時にmacOSのアクセシビリティ権限を求められます。
 System Settings > Privacy & Security > Accessibility で許可してください。
+
+### アンインストール
+
+```
+make uninstall
+```
+
+### 手動で実行する場合
+
+```
+make build
+./totalmix-mac-volume-key
+```
+
+### その他のコマンド
+
+```
+make stop      # デーモンを停止
+make start     # デーモンを起動
+make restart   # デーモンを再起動
+```
 
 ### オプション
 
@@ -43,3 +60,5 @@ System Settings > Privacy & Security > Accessibility で許可してください
 -recv-port 9001    TotalMix FX の OSC 送信ポート（デフォルト: 9001）
 -step 0.01         1キー押下あたりのボリュームステップ（デフォルト: 0.01 = 1%）
 ```
+
+ログは `/tmp/totalmix-mac-volume-key.log` に出力されます。
